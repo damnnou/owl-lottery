@@ -31,6 +31,7 @@ export default function LotteryEntrance({ account }) {
   };
 
   useEffect(() => {
+    setRaffle(null);
     account && configureContract();
   }, [account]);
 
