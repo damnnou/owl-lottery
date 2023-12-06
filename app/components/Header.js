@@ -6,8 +6,12 @@ export default function Header({ account, isLoading, enableWeb3 }) {
     <div className="flex items-center justify-between px-12 py-4 border">
       <div className="flex items-center mr-auto gap-10">
         <h3 className="font-bold text-3xl">Owl Winner</h3>
-        <p>My games:</p>
-        <p>My wallet:</p>
+        {account && (
+          <>
+            <p>My games:</p>
+            <p>My wallet:</p>
+          </>
+        )}
       </div>
       <div className="flex items-center ml-auto gap-10">
         <Button

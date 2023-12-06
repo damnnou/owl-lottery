@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { Header, Footer, LotteryEntrance } from "./components";
+
 export default function Home() {
   const [account, setAccount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
