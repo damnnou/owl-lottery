@@ -28,8 +28,15 @@ export default function LotteryEntrance({
   return (
     <div className="flex px-12 py-12 justify-center h-full">
       {raffle ? (
-        <div className="grid grid-cols-4 grid-rows-5 gap-12 w-full h-full transition-opacity ease-in-out duration-700">
-          <div className="col-span-2 row-span-4 bg-black rounded-md"></div>
+        <div className="grid grid-cols-4 grid-rows-5 gap-12 w-full h-full transition-opacity ease-in-out duration-700 animate-entry">
+          <div className="col-span-2 row-span-4 bg-center bg-cover bg-[url(/scale_2400.png)] rounded-md flex items-center justify-center">
+            <button
+              onClick={async () => await enterRaffle()}
+              className="bg-white w-48 mt-auto mb-12 py-4 font-bold text-xl px-4"
+            >
+              Enter Raffle
+            </button>
+          </div>
           <div className="relative row-span-4 bg-neutral-100 rounded-md">
             <div className="bg-green-100 rounded-t-md flex justify-center items-center py-4 border-b">
               <h3 className="text-2xl">Rules</h3>
@@ -53,8 +60,12 @@ export default function LotteryEntrance({
               />
             </div>
           </div>
-          <div className="row-span-2 bg-black rounded-md"></div>
-          <CardInfo styles="" title="My place" number="7 W" />
+          <div className="row-span-2 bg-blue-200 rounded-md"></div>
+          <CardInfo
+            styles=""
+            title="Entrance Fee"
+            number={entranceFee && ethers.formatUnits(entranceFee) + " ETH"}
+          />
           <CardInfo styles="" title="My winnings" number="1240" />
           <CardInfo styles="" title="Prize fund" number="1 234 770" />
           <CardInfo styles="" title="End of the game" number="01:54:00" />
