@@ -82,7 +82,11 @@ export default function Home() {
         isLoading={isLoading}
         toggleWeb3={async () => await toggleWeb3()}
       />
-      <LotteryEntrance raffle={raffle} account={account} />
+      <LotteryEntrance
+        isLoading={isLoading}
+        raffle={raffle}
+        account={account}
+      />
       <Footer />
     </div>
   );

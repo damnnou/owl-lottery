@@ -4,7 +4,12 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import CardInfo from "./CardInfo";
 
-export default function LotteryEntrance({ account, raffle, signer }) {
+export default function LotteryEntrance({
+  account,
+  raffle,
+  signer,
+  isLoading,
+}) {
   const [entranceFee, setEntranceFee] = useState("");
 
   const setEntrance = async () => {
@@ -23,7 +28,7 @@ export default function LotteryEntrance({ account, raffle, signer }) {
   return (
     <div className="flex px-12 py-12 justify-center h-full">
       {raffle ? (
-        <div className="grid grid-cols-4 grid-rows-5 gap-12 w-full h-full">
+        <div className="grid grid-cols-4 grid-rows-5 gap-12 w-full h-full transition-opacity ease-in-out duration-700">
           <div className="col-span-2 row-span-4 bg-black rounded-md"></div>
           <div className="relative row-span-4 bg-neutral-100 rounded-md">
             <div className="bg-green-100 rounded-t-md flex justify-center items-center py-4 border-b">
@@ -57,9 +62,22 @@ export default function LotteryEntrance({ account, raffle, signer }) {
           <CardInfo styles="" title="Best result" number="175 678" />
         </div>
       ) : (
-        <div className="flex flex-col mt-24 items-center">
+        <div className="flex flex-col mt-24 items-center ">
           <Image alt="owls" src="/owls.svg" width={400} height={0} />
-          <h1 className="text-3xl mt-12">Please connect your wallet!</h1>
+          {isLoading ? (
+            <div className="mt-12 mx-auto">
+              <h1 className=" text-2xl">Connecting</h1>
+              <Image
+                className="mx-auto"
+                alt="loading..."
+                src="/loading.svg"
+                width={60}
+                height={0}
+              />
+            </div>
+          ) : (
+            <h1 className="mt-12 text-2xl">Please connect your Wallet</h1>
+          )}
         </div>
       )}
     </div>
