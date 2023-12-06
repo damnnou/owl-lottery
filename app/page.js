@@ -1,9 +1,7 @@
 "use client";
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
-import Header from "./components/Header";
-import LotteryEntrance from "./components/LotteryEntrance";
-
+import { Header, Footer, LotteryEntrance } from "./components";
 export default function Home() {
   const [account, setAccount] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -12,6 +10,15 @@ export default function Home() {
     let provider;
     let signer;
     setIsLoading(true);
+
+    if (account) {
+      window.localStorage.removeItem("connected");
+      provider = null;
+      signer = null;
+      setIsLoading(false);
+      setAccount(null);
+      return console.log("successfully logged out");
+    }
 
     if (window.ethereum == null) {
       console.log("MetaMask not installed; using read-only defaults");
@@ -47,13 +54,14 @@ export default function Home() {
     });
   }, []);
   return (
-    <div>
+    <div className="flex flex-col justify-between h-screen">
       <Header
         account={account}
         isLoading={isLoading}
         enableWeb3={async () => await enableWeb3()}
       />
       <LotteryEntrance account={account} />
+      <Footer />
     </div>
   );
 }
