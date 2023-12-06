@@ -1,10 +1,18 @@
 "use client";
 import Button from "./Button";
+import Image from "next/image";
 
-export default function Header({ account, isLoading, enableWeb3 }) {
+export default function Header({ account, isLoading, toggleWeb3 }) {
   return (
     <div className="flex items-center justify-between px-12 py-4 border">
       <div className="flex items-center mr-auto gap-10">
+        <Image
+          className="text-black font-bold"
+          alt="owlLogo"
+          src="/sovaLogo.png"
+          width={60}
+          height={0}
+        />
         <h3 className="font-bold text-3xl">Owl Winner</h3>
         {account && (
           <>
@@ -26,7 +34,7 @@ export default function Header({ account, isLoading, enableWeb3 }) {
         />
         <Button
           disabled={isLoading}
-          handleClick={async () => await enableWeb3()}
+          handleClick={async () => await toggleWeb3()}
           styles="bg-green-100"
           text={account ? "Disconnect" : "Connect Wallet"}
         />

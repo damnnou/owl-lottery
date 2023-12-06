@@ -2,20 +2,34 @@
 import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { Header, Footer, LotteryEntrance } from "./components";
+import { abi, contractAddress } from "./constants";
 
 export default function Home() {
+  let chainId, provider;
   const [account, setAccount] = useState(null);
+  const [signer, setSigner] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const enableWeb3 = async () => {
-    let provider;
-    let signer;
+  const [raffle, setRaffle] = useState(null);
+
+  const configureContract = async () => {
+    chainId = parseInt(
+      await window.ethereum.request({ method: "eth_chainId" })
+    );
+    if (contractAddress[chainId]) {
+      setRaffle(new ethers.Contract(contractAddress[chainId][0], abi, signer));
+    } else {
+      console.log("unsupported network!");
+    }
+  };
+
+  const toggleWeb3 = async () => {
     setIsLoading(true);
 
     if (account) {
       window.localStorage.removeItem("connected");
       provider = null;
-      signer = null;
+      setSigner(null);
       setIsLoading(false);
       setAccount(null);
       return console.log("successfully logged out");
@@ -27,8 +41,8 @@ export default function Home() {
       setIsLoading(false);
     } else {
       provider = new ethers.BrowserProvider(window.ethereum);
-      signer = await provider.getSigner();
-      setAccount(signer.address);
+      setSigner(await provider.getSigner());
+      setAccount((await provider.getSigner()).address);
       window.localStorage.setItem("connected", "injected");
       setIsLoading(false);
     }
@@ -37,7 +51,7 @@ export default function Home() {
   useEffect(() => {
     if (account) return;
     if (window.localStorage.getItem("connected")) {
-      enableWeb3();
+      toggleWeb3();
     }
   }, [account]);
 
@@ -54,14 +68,21 @@ export default function Home() {
       }
     });
   }, []);
+
+  useEffect(() => {
+    setRaffle(null);
+    account && configureContract();
+  }, [account]);
+
   return (
     <div className="flex flex-col justify-between h-screen">
       <Header
+        signer={signer}
         account={account}
         isLoading={isLoading}
-        enableWeb3={async () => await enableWeb3()}
+        toggleWeb3={async () => await toggleWeb3()}
       />
-      <LotteryEntrance account={account} />
+      <LotteryEntrance raffle={raffle} account={account} />
       <Footer />
     </div>
   );
