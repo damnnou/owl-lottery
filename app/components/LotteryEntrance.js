@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import { ethers } from "ethers";
+import CardInfo from "./CardInfo";
 
 export default function LotteryEntrance({ account, raffle, signer }) {
   const [entranceFee, setEntranceFee] = useState("");
@@ -22,12 +23,9 @@ export default function LotteryEntrance({ account, raffle, signer }) {
   return (
     <div className="flex px-12 py-12 justify-center h-full">
       {raffle ? (
-        <div className="flex flex-col w-64">
-          Entrance Fee ={" "}
-          {entranceFee && ethers.formatUnits(entranceFee, "ether")} ETH
-          <button className="border" onClick={async () => enterRaffle()}>
-            Enter Raffle
-          </button>
+        <div className="grid grid-cols-4 gap-12 w-full h-full">
+          <div className="col-span-2"></div>
+          <CardInfo />
         </div>
       ) : (
         <div className="flex flex-col mt-24 items-center">
