@@ -4,6 +4,16 @@ import Image from "next/image";
 import { ethers } from "ethers";
 import CardInfo from "./CardInfo";
 
+import {
+  FcDebt,
+  FcClock,
+  FcConferenceCall,
+  FcSalesPerformance,
+  FcPieChart,
+  FcRating,
+  FcInternal,
+} from "react-icons/fc";
+
 export default function LotteryEntrance({
   account,
   raffle,
@@ -62,15 +72,19 @@ export default function LotteryEntrance({
           </div>
           <div className="row-span-2 bg-blue-200 rounded-md"></div>
           <CardInfo
-            styles=""
+            icon={FcInternal}
             title="Entrance Fee"
             number={entranceFee && ethers.formatUnits(entranceFee) + " ETH"}
           />
-          <CardInfo styles="" title="My winnings" number="1240" />
-          <CardInfo styles="" title="Prize fund" number="1 234 770" />
-          <CardInfo styles="" title="End of the game" number="01:54:00" />
-          <CardInfo styles="" title="Online" number="175 678" />
-          <CardInfo styles="" title="Best result" number="175 678" />
+          <CardInfo icon={FcPieChart} title="My winnings" number="1240" />
+          <CardInfo
+            icon={FcSalesPerformance}
+            title="Prize fund"
+            number="1 234 770"
+          />
+          <CardInfo icon={FcClock} title="End of the game" number="01:54:00" />
+          <CardInfo icon={FcConferenceCall} title="Online" number="175 678" />
+          <CardInfo icon={FcRating} title="Best result" number="175 678" />
         </div>
       ) : (
         <div className="flex flex-col mt-24 items-center ">
